@@ -20,7 +20,6 @@ app.get('/timetables/3/getInfo', (req, res) => {
     }).status(200);
 });
 app.post('/timetables/3/getCal', (req, res) => {
-    console.log("!@#!@#");
     let _start = new Date(req.body.start);
     _start.setDate(_start.getDate() - 3);
     _start = _start.valueOf();
