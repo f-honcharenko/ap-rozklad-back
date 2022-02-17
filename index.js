@@ -29,30 +29,44 @@ app.use('/timetables/3/getSpecs', (req, res) => {
 
 });
 app.get('/timetables/3/getInfo', (req, res) => {
-    res.json({
-        date: data.lastUpdate,
-        teachers: Object.keys(data.teachers)
-    }).status(200);
+    try {
+        return res.json({
+            date: data.lastUpdate,
+            teachers: Object.keys(data.teachers)
+        }).status(200);
+    } catch (error) {
+        return res.json({
+            msg: "Непредвиденная ошибка сервера."
+        }).status(500);
+    }
 });
 app.post('/timetables/3/getCal', (req, res) => {
-    let _start = new Date(req.body.start);
-    _start.setDate(_start.getDate() - 3);
-    _start = _start.valueOf();
-    let _end = new Date(req.body.end).valueOf();
-    let _course = req.body.spec;
-    let _subGroup = req.body.group;
-    let _responce = [];
-    console.log(_course);
-    console.log(_subGroup);
-    console.log(data[_course][_subGroup] ? "Найдено" : "Ошибка");
-    for (date in data[_course][_subGroup]) {
-        // console.log(date);
-        if ((date > _start) && (date < _end)) {
-            _responce.push(...data[_course][_subGroup][date])
+    try {
+        let _start = new Date(req.body.start);
+        _start.setDate(_start.getDate() - 3);
+        _start = _start.valueOf();
+        const _end = new Date(req.body.end).valueOf();
+        const _course = req.body.spec;
+        const _subGroup = req.body.group;
+        let _responce = [];
+        if (data[_course][_subGroup]) {
+            for (date in data[_course][_subGroup]) {
+                if ((date > _start) && (date < _end)) {
+                    _responce.push(...data[_course][_subGroup][date])
+                }
+            }
+            return res.json(_responce).status(200);
+        } else {
+            return res.json({
+                msg: "По данному запросу ничего не найдено"
+            }).status(200);
         }
+
+    } catch (error) {
+        return res.json({
+            msg: "Непредвиденная ошибка сервера."
+        }).status(500);
     }
-    // console.log(_start, _end);
-    res.json(_responce).status(200);
 })
 
 app.get('/', (req, res) => {
