@@ -19,6 +19,7 @@ app.use('/timetables/3/getSpecs', (req, res) => {
         Object.keys(data).forEach(element => {
             responce[element] = Object.keys(data[element]);
         });
+        delete responce.lastUpdate
         return res.json(responce).status(200);
     } catch (error) {
         return res.json({
