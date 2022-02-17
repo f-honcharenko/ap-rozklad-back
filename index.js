@@ -57,9 +57,9 @@ app.post('/timetables/3/getCal', (req, res) => {
             }
             return res.json(_responce).status(200);
         } else {
-            return res.json({
+            return res.status(400).json({
                 msg: "По данному запросу ничего не найдено"
-            }).status(400);
+            });
         }
     } catch (error) {
         return res.json({
