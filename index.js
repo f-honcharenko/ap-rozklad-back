@@ -3,7 +3,7 @@ const data = require('./output2.json');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const app = express()
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.use(cors());
 
 // parse application/x-www-form-urlencoded
@@ -13,6 +13,20 @@ app.use(bodyParser.urlencoded({
 
 // parse application/json
 app.use(bodyParser.json())
+app.use('/timetables/3/getSpecs', (req, res) => {
+    try {
+        let responce = {};
+        Object.keys(data).forEach(element => {
+            responce[element] = Object.keys(data[element]);
+        });
+        return res.json(responce).status(200);
+    } catch (error) {
+        return res.json({
+            msg: "Непредвиденная ошибка сервера."
+        }).status(500);
+    }
+
+});
 app.get('/timetables/3/getInfo', (req, res) => {
     res.json({
         date: data.lastUpdate,
