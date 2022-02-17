@@ -64,7 +64,7 @@ app.post('/timetables/3/getCal', (req, res) => {
     } catch (error) {
         return res.status(500).json({
             msg: "Непредвиденная ошибка сервера."
-        }).;
+        });
     }
 })
 
