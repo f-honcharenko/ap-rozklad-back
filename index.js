@@ -20,24 +20,24 @@ app.use('/timetables/3/getSpecs', (req, res) => {
             responce[element] = Object.keys(data[element]);
         });
         delete responce.lastUpdate
-        return res.json(responce).status(200);
+        return res.status(200).json(responce);
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             msg: "Непредвиденная ошибка сервера."
-        }).status(500);
+        });
     }
 
 });
 app.get('/timetables/3/getInfo', (req, res) => {
     try {
-        return res.json({
+        return res.status(200).json({
             date: data.lastUpdate,
             teachers: Object.keys(data.teachers)
-        }).status(200);
+        });
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             msg: "Непредвиденная ошибка сервера."
-        }).status(500);
+        });
     }
 });
 app.post('/timetables/3/getCal', (req, res) => {
@@ -55,16 +55,16 @@ app.post('/timetables/3/getCal', (req, res) => {
                     _responce.push(...data[_course][_subGroup][date])
                 }
             }
-            return res.json(_responce).status(200);
+            return res.status(200).json(_responce);
         } else {
             return res.status(400).json({
                 msg: "По данному запросу ничего не найдено"
             });
         }
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             msg: "Непредвиденная ошибка сервера."
-        }).status(500);
+        }).;
     }
 })
 
