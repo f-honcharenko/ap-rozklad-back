@@ -10,10 +10,10 @@ const app = express();
 
 const PORT = 3000;
 
+app.use(cors());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 
 app.use('/timetables/3/', timetable);
