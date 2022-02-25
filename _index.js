@@ -1,5 +1,5 @@
 const express = require('express');
-const data = require('./output2.json');
+const data = require('./data/output2.json');
 const bodyParser = require('body-parser');
 const cors = require('cors')
 const app = express()
