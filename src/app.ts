@@ -1,7 +1,8 @@
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
-import cors from 'cors';
+// import cors from 'cors';
+const cors = require('cors')
 
 import { timetable } from './services/timetables'
 import { errorHandler } from './utils/errorHandler';
