@@ -7,18 +7,6 @@ import { timetable } from './services/timetables'
 import { errorHandler } from './utils/errorHandler';
 
 const app = express();
-const options: cors.CorsOptions = {
-    allowedHeaders: [
-        'Origin',
-        'X-Requested-With',
-        'Content-Type',
-        'Accept',
-        'X-Access-Token',
-    ],
-    credentials: true,
-    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-};
 const PORT = 3000;
 
 app.use(cors());
@@ -26,17 +14,8 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.options('/', function (req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader("Access-Control-Allow-Headers", "*");
-    res.end();
-});
-
 app.use('/timetables/3/', timetable);
 app.use(errorHandler);
-
-app.options('*', cors());
 
 export async function startServer() {
     return app.listen(PORT, async () => {
