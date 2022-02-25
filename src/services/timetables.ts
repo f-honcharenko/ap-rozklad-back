@@ -3,7 +3,7 @@ import rawData from '../data/output.json'
 
 export const timetable = express.Router();
 
-timetable.post('/getSpecs/', async (req, res, next) => {
+timetable.get('/getSpecs/', async (req, res, next) => {
     try {
         let responce = {lastUpdate:null};
         Object.keys(rawData).forEach(element => {
@@ -16,7 +16,7 @@ timetable.post('/getSpecs/', async (req, res, next) => {
     } 
 });
 
-timetable.post('/getInfo/', async (req, res, next) => {
+timetable.get('/getInfo/', async (req, res, next) => {
     try {
         return next(Promise.resolve({ data:{
             date: rawData.lastUpdate,
