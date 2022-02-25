@@ -7,7 +7,18 @@ import { timetable } from './services/timetables'
 import { errorHandler } from './utils/errorHandler';
 
 const app = express();
-
+const options: cors.CorsOptions = {
+    allowedHeaders: [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept',
+        'X-Access-Token',
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+};
 const PORT = 3000;
 
 app.use(cors());
