@@ -1,7 +1,7 @@
 import express from 'express';
 import rawData from '../data/output.json'
 
-export const timetable = express.Router();
+const timetable = express.Router();
 
 timetable.get('/getSpecs/', async (req, res, next) => {
     try {
@@ -29,6 +29,7 @@ timetable.get('/getInfo/', async (req, res, next) => {
 
 timetable.post('/getCal/', async (req, res, next) => {
     try {
+        let _responce = [];
         let _temp = new Date(req.body.start);
         _temp.setDate(_temp.getDate() - 3);
         const _start = _temp.valueOf();
@@ -38,19 +39,20 @@ timetable.post('/getCal/', async (req, res, next) => {
         if (!_start || !_end || !_course || !_subGroup) { 
             return next(Promise.resolve({ data: {msg:'Недостаточно входных параметров'}, status:400 }));
         }
-        let _responce = [];
-        if (rawData[_course][_subGroup]) {
+        if (!rawData[_course] || !rawData[_course][_subGroup]) {
+            return next(Promise.resolve({ data: {msg:'По данному запросу ничего не найдено'}, status:400 }));
+        }else{
             for (const date in rawData[_course][_subGroup]) {
                 if ((Number(date) > _start) && (Number(date) < _end)) {
                     _responce.push(...rawData[_course][_subGroup][date])
                 }
             }
             return next(Promise.resolve({ data:_responce, status:200 }));
-        } else {
-            return next(Promise.resolve({ data:{msg:'По данному запросу ничего не найдено'}, status:404 }));
         }
     }catch (error) {
         return next(error);
     } 
 });
+
+export default timetable
 

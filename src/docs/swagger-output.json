@@ -1,0 +1,271 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RozkladAPI",
+    "version": "3.0.1",
+    "description": "Free API for KNU-AIS students."
+  },
+  "host": "ap-rozklad-back.herokuapp.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/timetables/3/getSpecs/": {
+      "get": {
+        "description": "Getting all groups and teachers names.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Object where keys is title of group and childrens is subgroups",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teachers": {
+                  "type": "array",
+                  "example": [
+                    "teacher1",
+                    "teacher2",
+                    "teacher3"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "groupName1": {
+                  "type": "array",
+                  "example": [
+                    "subgroup1",
+                    "subgroup2"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "groupName2": {
+                  "type": "array",
+                  "example": [
+                    "subgroup1",
+                    "subgroup2"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "ServerError",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Непредвиденная ошибка сервера"
+                },
+                "err": {
+                  "type": "string",
+                  "example": "errorString"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/timetables/3/getInfo/": {
+      "get": {
+        "description": "Getting all teachers names and scheduleLastUpdateDate.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Object where keys is title of group and childrens is subgroups",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "example": 123456789
+                },
+                "teachers": {
+                  "type": "array",
+                  "example": [
+                    "teacher1",
+                    "teacher2"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "ServerError",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Непредвиденная ошибка сервера"
+                },
+                "err": {
+                  "type": "string",
+                  "example": "errorString"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/timetables/3/getCal/": {
+      "post": {
+        "description": "Get an array of lessons from date [start] to date [end] of course [spec] of subgroup [group]..",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "spec": {
+                  "type": "string",
+                  "example": "2 курс"
+                },
+                "group": {
+                  "type": "string",
+                  "example": "підгрупа ПП-22/2"
+                },
+                "start": {
+                  "type": "string",
+                  "example": "2022-01-31T00:00:00+01:00"
+                },
+                "end": {
+                  "type": "string",
+                  "example": "2022-03-14T00:00:00+01:00"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array with lessons",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Менеджмент проектів програмного забезпечення"
+                  },
+                  "teacher": {
+                    "type": "string",
+                    "example": "ас. Лукутін О.В."
+                  },
+                  "_time": {
+                    "type": "string",
+                    "example": "9.00-10.20"
+                  },
+                  "online": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "start": {
+                    "type": "number",
+                    "example": 1643612400000
+                  },
+                  "end": {
+                    "type": "number",
+                    "example": 1643617200000
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "example": "blue"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "Л"
+                  },
+                  "url": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "missing parameters",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Недостаточно входных параметров"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "По данному запросу ничего не найдено"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "ServerError",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Непредвиденная ошибка сервера"
+                },
+                "err": {
+                  "type": "string",
+                  "example": "errorString"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

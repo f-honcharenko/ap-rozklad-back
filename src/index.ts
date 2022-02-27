@@ -1,3 +1,6 @@
 import { startServer } from "./app";
 
-startServer();
+const init = async () => { 
+    await startServer();
+}
+init();
