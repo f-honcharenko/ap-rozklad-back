@@ -54,13 +54,5 @@ timetable.post('/getCal/', async (req, res, next) => {
     } 
 });
 
-timetable.get('/teachers/', async (req, res, next) => {
-    try { 
-        return next(Promise.resolve({ data: {list:Object.keys(rawData.teachers), count:Object.keys(rawData.teachers).length  },status:200}))
-    } catch (error) {
-        return next(error);
-    }
-})
-
 export default timetable
 
