@@ -266,6 +266,103 @@
           }
         }
       }
+    },
+    "/timetables/3/getDay/": {
+      "get": {
+        "description": "Get an array of lessons from one [day] of subgroup [group]..",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Date (timestamp)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"1650394047000",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },{
+            "name": "group",
+            "in": "path",
+            "description": "Group",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"підгрупа ПП-22/2"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string",
+                  "example": "підгрупа ПП-22/2",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "list": {
+                  "type": "array",
+                  "example": [
+                    "{LessonObject}",
+                    "{LessonObject}"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "По данному запросу ничего не найдено"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "ServerError",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "msg": {
+                  "type": "string",
+                  "example": "Непредвиденная ошибка сервера"
+                },
+                "err": {
+                  "type": "string",
+                  "example": "errorString"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
